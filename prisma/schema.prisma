@@ -20,3 +20,22 @@ model User {
   
   @@map(name: "users")
 }
+
+model Transaction {
+  id                 Int       @default(autoincrement()) @id
+  fromId             String    @map(name: "from_id")
+  fromEmail          String
+  toId               String    @map(name: "to_id")
+  toEmail            String
+  value              Int  
+  curreny            Curreny  
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+  @@map(name: "transactions")
+}
+
+enum Curreny {
+  USD
+  EUR
+  NGN
+}

@@ -30,9 +30,6 @@ export default NextAuth({
         }
         
         const checkPassword = await compare(credentials?.password, user.password)
-
-        console.log (user.password);
-
         if(checkPassword){
           return user
         } else {
