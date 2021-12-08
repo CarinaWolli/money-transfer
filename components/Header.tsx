@@ -4,7 +4,7 @@ import { RiAccountCircleLine } from "react-icons/ri";
 import { GrLogout } from "react-icons/gr";
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 const Header: React.FC = () => {
   const { data: session, status } = useSession()
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
                     <GrLogout
                         className="w-5 h-5 mr-2"
                       />
-                    <a href="/api/auth/logout"> Logout</a>
+                    <button onClick={() => {signOut()}}>Logout</button>
                   </button>
                 )}
               </Menu.Item>

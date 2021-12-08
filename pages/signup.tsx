@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
+import { signIn } from 'next-auth/react'
 
 const SignUp = () => {
   const [name, setName] = useState('')

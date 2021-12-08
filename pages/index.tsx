@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import Layout from '../components/Layout';
 import prisma from '../lib/prisma';
 import Link from 'next/link';
+import { useRouter } from 'next/router'
 
 export const getServerSideProps = async () => {
   const allTransactions = await prisma.transaction.findMany();
@@ -11,15 +12,16 @@ export const getServerSideProps = async () => {
 }
 
 export default function Index (props) {
-  const {data: session } = useSession();
+  const router = useRouter()
+  const { data: session, status } = useSession()
 
+  if (status === 'loading') {
+    return <div>Loading...</div>
+  }
   if (!session) {
-    //window.location.assign('/api/auth/signin')
-    return (
-      <div>not signed it</div>
-    )
-
-  } else {
+    window.location.assign(window.location.href+'/api/auth/signin')
+    return null    
+  }
     if (props.allTransactions) {
       return (
         <Layout>
@@ -97,4 +99,4 @@ export default function Index (props) {
     )
     }
 }
-}
+
