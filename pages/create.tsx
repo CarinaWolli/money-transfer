@@ -18,16 +18,14 @@ export const getServerSideProps = async () => {
 export default function Create(props) {
   const { data: session } = useSession()
   
-  const [toId, setToId] = useState(0)
+  const [toUserId, settoUserId] = useState(0)
   const [value, setValue] = useState('0.00')
   const [currency, setCurrency] = useState('')
   const [valid, setValid] = useState(false)
-  const fromEmail = 'from email'
-  const toEmail = 'to email'
-  const fromId = (session != undefined) ? session.id : 1
+  const fromUserId = (session != undefined) ? session.id : 0
 
   let handleToChange = (e) => {
-    setToId(parseInt(e.target.value))
+    settoUserId(parseInt(e.target.value))
   }
 
   let handleCurrencyChange = (e) => {
@@ -55,7 +53,7 @@ export default function Create(props) {
   const submitData = async (e: React.SyntheticEvent) => {
     const val = parseFloat(value)
     try {
-        const body = { fromId, fromEmail, toId, toEmail, val, currency };
+        const body = { fromUserId, toUserId, val, currency };
         const res = await axios.post('/api/create', body);
         res.data
         await Router.push('/');

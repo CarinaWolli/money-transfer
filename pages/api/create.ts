@@ -2,13 +2,11 @@ import prisma from "../../lib/prisma"
 import axios from 'axios';
 
 export default async function handle(req, res) {
-  const { fromId, fromEmail, toId, toEmail, val, currency } = req.body
+  const { fromUserId, toUserId, val, currency } = req.body
   const response = await prisma.transaction.create({
     data: {
-      fromId: fromId,
-      fromEmail: fromEmail,
-      toId: toId,
-      toEmail: toEmail,
+      fromUserId: fromUserId,
+      toUserId: toUserId,
       value: val,
       currency: currency,
     },
