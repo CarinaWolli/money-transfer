@@ -11,7 +11,6 @@ export default async function handle(req, res) {
       currency: currency,
     },
   })
-
   res.status(200).send({message: 'Transaction created', user: response})
   return 
 }

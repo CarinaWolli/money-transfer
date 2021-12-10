@@ -80,7 +80,7 @@ export default function Index (props) {
                         {session.id  === transaction.fromUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromUser.email}</td> }
                         {session.id === transaction.toUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toUser.email}</td> }
                         <td key={transaction.id} className="pl-2">{transaction.value}</td>
-                        <td key={transaction.id} className="pl-2">{transaction.curreny}</td>
+                        <td key={transaction.id} className="pl-2">{transaction.currency}</td>
                         <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4,25)}</td>
                         <td key={transaction.id} className="pl-2">{transaction.updatedAt.toString().substring(4,25)}</td>
                       </tr>

@@ -52,6 +52,7 @@ export default function Create(props) {
 
   const submitData = async (e: React.SyntheticEvent) => {
     const val = parseFloat(value)
+    e.preventDefault();
     try {
         const body = { fromUserId, toUserId, val, currency };
         const res = await axios.post('/api/create', body);
