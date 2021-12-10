@@ -5,7 +5,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 
 export const getServerSideProps = async () => {
-  const allTransactions = await prisma.transaction.findMany();
+  const allTransactions = await prisma.transaction.findMany({
+    include: {
+      toUser: true, 
+      fromUser: true, 
+    }
+  })
   return {
     props: { allTransactions }, // will be passed to the page component as props
   }
@@ -72,8 +77,8 @@ export default function Index (props) {
                     {props.allTransactions.map((transaction) =>
                       <tr key={transaction.id}>
                         <td key={transaction.id} className="pl-2">{transaction.id}</td>
-                        {session.user.id  === transaction.fromId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromEmail}</td> }
-                        {session.user.id === transaction.toId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toEmail}</td> }
+                        {session.id  === transaction.fromUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromUser.email}</td> }
+                        {session.id === transaction.toUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toUser.email}</td> }
                         <td key={transaction.id} className="pl-2">{transaction.value}</td>
                         <td key={transaction.id} className="pl-2">{transaction.curreny}</td>
                         <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4,25)}</td>
