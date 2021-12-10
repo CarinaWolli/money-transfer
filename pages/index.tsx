@@ -23,6 +23,7 @@ export default function Index (props) {
     return null    
   }
     if (props.allTransactions) {
+      console.log(session)
       return (
         <Layout>
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
@@ -33,7 +34,7 @@ export default function Index (props) {
                     <h3 className="font-semibold text-base text-blueGray-700 text-2xl">Transactions</h3>
                   </div>
                   <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">         
-                    <Link href="/create">
+                    <Link href="/create" passHref>
                       <button className="bg-indigo-500 text-white active:bg-indigo-600 text-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
                     </Link>
                   </div>
@@ -71,8 +72,8 @@ export default function Index (props) {
                     {props.allTransactions.map((transaction) =>
                       <tr key={transaction.id}>
                         <td key={transaction.id} className="pl-2">{transaction.id}</td>
-                        {session.user.sub.substring(6) === transaction.fromId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromEmail}</td> }
-                        {session.user.sub.substring(6) === transaction.toId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toEmail}</td> }
+                        {session.user.id  === transaction.fromId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromEmail}</td> }
+                        {session.user.id === transaction.toId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toEmail}</td> }
                         <td key={transaction.id} className="pl-2">{transaction.value}</td>
                         <td key={transaction.id} className="pl-2">{transaction.curreny}</td>
                         <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4,25)}</td>

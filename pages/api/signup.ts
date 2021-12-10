@@ -4,7 +4,6 @@ import { hashSync } from 'bcrypt'
 
 export default async function handle(req, res) {
   const { name, email, password } = req.body
-  debugger;
   const findUser = await prisma.user.findFirst({
     where: {email: email}
   })
