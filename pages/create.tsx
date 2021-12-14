@@ -14,13 +14,19 @@ export const getServerSideProps = async () => {
 export default function Create(props) {
   const [toUserId, settoUserId] = useState(0)
   const [value, setValue] = useState("0.00")
-  const [currency, setCurrency] = useState("")
+  const [currency, setCurrency] = useState("EUR")
   const [valid, setValid] = useState(false)
+  const [userValid, setUserValid] = useState(false)
 
   const { data: session, status } = useSession()
   const fromUserId = (session != undefined) ? session.id : 0
 
   let handleToChange = (e) => {
+    if (e.target.value < 1) {
+      setUserValid(false)
+    } else {
+      setUserValid(true)
+    }
     settoUserId(parseInt(e.target.value))
   }
 
@@ -47,16 +53,16 @@ export default function Create(props) {
   }
 
   const submitData = async (e: React.SyntheticEvent) => {
-    const val = parseFloat(value)
-    e.preventDefault()
-    try {
-      const body = { fromUserId, toUserId, val, currency }
-      const res = await axios.post("/api/create", body)
-      res.data
-      await Router.push("/")
-    } catch (error) {
-      console.error(error)
-    }
+      const val = parseFloat(value)
+      e.preventDefault()
+      try {
+        const body = { fromUserId, toUserId, val, currency }
+        const res = await axios.post("/api/create", body)
+        res.data
+        await Router.push("/")
+      } catch (error) {
+        console.error(error)
+      }
   }
 
   if (status === "loading") {
@@ -79,18 +85,25 @@ export default function Create(props) {
             </div>
           </div>
           <form className="w-full max-w-lg">
-            <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="mb-6">
+            <div className="flex flex-wrap -mx-3">
               <div className="flex items-center">
                 <label className="block tracking-wide text-gray-700 font-bold text-lg">
                   To:
                 </label>
                 <div className="flex w-72 items-center border-2 rounded-md ml-11">
                   <select onChange={handleToChange} type="number" className="w-64 px-2 py-3 text-normal text-gray-700">
-                    <option key="default" value="default">None</option>
+                    <option key="default" value="0">None</option>
                     {props.allUser.map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
                   </select>
                 </div>
               </div>
+            </div>
+            {!userValid ? (
+              <p className="text-red-500 text-xs italic -mx-3 mt-2">User can't be none.</p>
+            ) : (
+              <div />
+            )}
             </div>
             <div className="flex flex-wrap -mx-3">
               <div className="flex items-center">
@@ -99,12 +112,12 @@ export default function Create(props) {
                   Value:
                 </label>
                 <input
-                  className="appearance-none block w-72 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="appearance-none block w-72 text-gray-700 border-2 border-gray-200 rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   placeholder="0.00"
                   value={value}
                   onChange={handleValueChange} />
-                <div className="flex items-center border-2 rounded-md ml-4 mb-3">
+                <div className="flex items-center border-2 rounded-md ml-4">
                   <select onChange={handleCurrencyChange} className="px-4 py-3 text-normal text-gray-700" id="grid-state">
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
@@ -114,12 +127,12 @@ export default function Create(props) {
               </div>
             </div>
             {!valid ? (
-                <p className="text-red-500 text-xs italic -mx-3 mb-6">Invalid value. Value must be higher than 0. Expected format is 0.00</p>
-              ) : (
-                <div />
-              )}
-            <div className="-mx-3 pb-1 pt-3">
-              <button onClick={submitData} className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">Send Money</button>
+              <p className="text-red-500 text-xs italic -mx-3 mt-2">Invalid value. Value must be higher than 0. Expected format is 0.00</p>
+            ) : (
+              <div />
+            )}
+            <div className="-mx-3 pb-1 pt-3 mt-6">
+              <button onClick={submitData} disabled={!valid || !userValid}className={"bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded " + (valid && userValid ? "" : "bg-gray-400 text-white")} >Send Money</button>
             </div>
           </form>
         </div>
