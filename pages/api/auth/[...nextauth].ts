@@ -58,6 +58,7 @@ export default NextAuth({
     encryption: true,
   },
   pages: {
-    signIn: '/login' // Changing the error redirect page to our custom login page
+    signIn: '/login',
+    error: '/login' // Changing the error redirect page to our custom login page
   }
 });
