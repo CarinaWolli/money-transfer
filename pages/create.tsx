@@ -63,30 +63,32 @@ export default function Create(props) {
   };
 
   return (
-    <div>
-      <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
-        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
-          <div className="rounded-t mb-0 px-4 py-3 border-0">
+    <div className="mx-auto"> 
+      <div className="className='bg-gray-bg1 mt-15'">
+        <div className="bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
+          <div className="mb-10 px-4 py-3 ">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1 pl-0">
-                <h3 className="font-semibold text-base text-blueGray-700 text-2xl">New Transaction</h3>
+                <h3 className="text-center font-semibold text-base text-blueGray-700 text-2xl">New Transaction</h3>
               </div>
             </div>
           </div>
           <form className="w-full max-w-lg">
             <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              <div className="flex items-center">
+                <label className="block tracking-wide text-gray-700 text-xs font-bold text-lg">
                   To:
                 </label>
-                <select onChange={handleToChange} type="number">
-                  <option key="default" value="default">None</option>
-                  {props.allUser.map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
-                </select>
+                <div className="flex items-center col-span-3 border-2 rounded-md ml-4">
+                  <select onChange={handleToChange} type="number" className="px-4 py-2 text-normal">
+                    <option key="default" value="default">None</option>
+                    {props.allUser.map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
+                  </select>
+                </div>
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3">
+              <div className="flex items-center">
                 <label 
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                   Value
