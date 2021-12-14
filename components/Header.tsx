@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { useSession, signOut } from "next-auth/react"
 
-const Header: React.FC = () => {
+export default function Header() {  
   const { data: session, status } = useSession()
 
   if (status === "authenticated") {
@@ -65,5 +65,3 @@ const Header: React.FC = () => {
     return null
   }
 };
-
-export default Header;

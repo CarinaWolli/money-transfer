@@ -30,7 +30,7 @@ export default function Index (props) {
     if (props.allTransactions) {
       console.log(session)
       return (
-        <Layout>
+        <div>
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
               <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -93,7 +93,7 @@ export default function Index (props) {
             </div>
           </div>
 
-        </Layout>
+        </div>
       );
   } else {
     return (
