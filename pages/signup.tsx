@@ -6,35 +6,41 @@ import Head from 'next/head';
 import { signIn } from 'next-auth/react'
 
 const SignUp = () => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    try {
-        const body = { name, email, password };
-        const res = await axios.post('/api/signup', body);
-        res.data
-        await Router.push('/');
-    } catch (error) {
-        console.error(error);
-    }
-  };
+    const submitData = async (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        try {
+            const body = { name, email, password };
+            const res = await axios.post('/api/signup', body);
+            res.data
+            await Router.push('/');
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-  return (
-    <div>
+    return (
+        <div className="mx-auto">
             <Head>
                 <title>Sign Up</title>
-                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <div className='h-screen flex bg-gray-bg1'>
-                <div className='w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
-                    <h1 className='text-lg text-center text-primary'>Simba Finance App</h1>
-                    <h1 className='text-2xl font-medium text-primary mt-4 mb-12 text-center'>
+            <div className='bg-gray-bg1 mt-15'>
+                <div className='bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16'>
+                    <div>
+                        <img className="mx-auto h-12 w-auto" src="https://static.thenounproject.com/png/13792-84.png" alt="Workflow" />
+                    </div>
+                    <h3 className='text-2xl font-medium text-primary mt-6 mb-3 text-center'>
                         Sign up
-                    </h1>
-
+                    </h3>
+                    <div className='flex justify-center items-center mb-8'>
+                        <a> Already an account? </a>
+                        <a href="/login" className="font-medium text-indigo-500 hover:text-indigo-500">
+                            Sign in
+                        </a>
+                    </div>
                     <form>
                         <div>
                             <label htmlFor='text'>Full Name</label>
@@ -80,13 +86,6 @@ const SignUp = () => {
                         </div>
 
                         <div className='flex justify-center items-center mt-6'>
-                            <Link href='/'>
-                                <button
-                                    className="bg-primary mr-6 py-2 px-4 text-sm text-black rounded border border-green focus:outline-none focus:border-green-dark"
-                                >
-                                    Login
-                                </button>
-                            </Link>
                             <button
                                 disabled={!name || !email || !password} type="submit"
                                 onClick={submitData}
@@ -99,7 +98,7 @@ const SignUp = () => {
                 </div>
             </div>
         </div>
-  )
+    )
 
 }
 
