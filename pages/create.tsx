@@ -84,8 +84,8 @@ export default function Create(props) {
                 <label className="block tracking-wide text-gray-700 font-bold text-lg">
                   To:
                 </label>
-                <div className="flex items-center col-span-3 border-2 rounded-md ml-11">
-                  <select onChange={handleToChange} type="number" className="px-4 py-3 text-normal text-gray-700">
+                <div className="flex w-72 items-center border-2 rounded-md ml-11">
+                  <select onChange={handleToChange} type="number" className="w-64 px-2 py-3 text-normal text-gray-700">
                     <option key="default" value="default">None</option>
                     {props.allUser.map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
                   </select>
@@ -99,12 +99,12 @@ export default function Create(props) {
                   Value:
                 </label>
                 <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="appearance-none block w-72 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   placeholder="0.00"
                   value={value}
                   onChange={handleValueChange} />
-                <div className="flex items-center col-span-3 border-2 rounded-md ml-4 mb-3">
+                <div className="flex items-center border-2 rounded-md ml-4 mb-3">
                   <select onChange={handleCurrencyChange} className="px-4 py-3 text-normal text-gray-700" id="grid-state">
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
