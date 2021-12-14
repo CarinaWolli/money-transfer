@@ -1,26 +1,23 @@
-import React, { useState } from 'react'
-import prisma from '../lib/prisma';
+import React, { useState } from "react"
+import prisma from "../lib/prisma"
 import { useSession } from "next-auth/react"
-import axios from 'axios';
-import Router from 'next/router';
-
-
-
+import axios from "axios"
+import Router from "next/router"
 
 export const getServerSideProps = async () => {
   const allUser = await prisma.user.findMany()
   return {
-    props: { allUser }, // will be passed to the page component as props
+    props: { allUser },
   }
 }
 
 export default function Create(props) {
-  const { data: session, status } = useSession()
-
   const [toUserId, settoUserId] = useState(0)
-  const [value, setValue] = useState('0.00')
-  const [currency, setCurrency] = useState('')
+  const [value, setValue] = useState("0.00")
+  const [currency, setCurrency] = useState("")
   const [valid, setValid] = useState(false)
+
+  const { data: session, status } = useSession()
   const fromUserId = (session != undefined) ? session.id : 0
 
   let handleToChange = (e) => {
@@ -33,9 +30,9 @@ export default function Create(props) {
 
   let handleValueChange = (e) => {
     const StringVal: String = e.target.value
-    if (StringVal.includes('.')) {
-      let splitString = StringVal.split('.')
-      if (splitString.length - 1 == 1 && splitString[1].length == 2 && StringVal != '0.00') {
+    if (StringVal.includes(".")) {
+      let splitString = StringVal.split(".")
+      if (splitString.length - 1 == 1 && splitString[1].length == 2 && StringVal != "0.00") {
 
         setValue(e.target.value)
         setValid(true)
@@ -51,16 +48,16 @@ export default function Create(props) {
 
   const submitData = async (e: React.SyntheticEvent) => {
     const val = parseFloat(value)
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const body = { fromUserId, toUserId, val, currency };
-      const res = await axios.post('/api/create', body);
+      const body = { fromUserId, toUserId, val, currency }
+      const res = await axios.post("/api/create", body)
       res.data
-      await Router.push('/');
+      await Router.push("/")
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   if (status === "loading") {
     return <p>Loading...</p>
@@ -122,12 +119,12 @@ export default function Create(props) {
               )}
             </div>
             <div className="-mx-3 pb-1 pt-3">
-                <button onClick={submitData} className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">Send Money</button>
+              <button onClick={submitData} className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">Send Money</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
