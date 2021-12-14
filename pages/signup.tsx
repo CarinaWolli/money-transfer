@@ -43,7 +43,7 @@ const SignUp = () => {
                     <div className="flex justify-center items-center mb-8">
                         <a> Already an account? </a>
                         <Link href="/login">
-                            <a className="font-medium text-indigo-600 hover:text-indigo-500">Sign up</a>
+                            <a className="font-medium text-indigo-600 hover:text-indigo-500 ml-1">Sign in</a>
                         </Link>
                     </div>
                     <form>
@@ -76,18 +76,18 @@ const SignUp = () => {
                         </div>
                         <div>
                             <label htmlFor="password">Password</label>
-                            {
-                                password === "" &&
-                                <small className="animate-pulse text-xs text-red-600"><br />Password Cannot be empty</small>
-                            }
                             <input
                                 type="password"
                                 onChange={(e) => setPassword(e.target.value)}
-                                className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
+                                className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out`}
                                 id="password"
                                 placeholder="Your Password"
                                 value={password}
                             />
+                            {
+                                password === "" &&
+                                <small className="text-xs text-red-600 mb-4"><br />Password Cannot be empty</small>
+                            }
                         </div>
 
                         <div className="flex justify-center items-center mt-6">
