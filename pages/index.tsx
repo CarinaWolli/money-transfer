@@ -27,7 +27,10 @@ export default function Index (props) {
     window.location.assign(window.location.href+'/api/auth/signin')
     return null    
   }
-    if (props.allTransactions) {
+
+  const usersTransactions = props.allTransactions.filter(t => t.fromUserId === session.id || t.toUserId === session.id)
+
+    if (props.allTransactions && usersTransactions.length > 0) {
       console.log(session)
       return (
         <div className="mx-auto">
@@ -74,7 +77,7 @@ export default function Index (props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {props.allTransactions.map((transaction) =>
+                    {usersTransactions.map((transaction) =>
                       <tr key={transaction.id}>
                         <td key={transaction.id} className="pl-2">{transaction.id}</td>
                         {session.id  === transaction.fromUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromUser.email}</td> }
@@ -97,11 +100,9 @@ export default function Index (props) {
       );
   } else {
     return (
-      <Layout>
         <div>
           no Transactions
         </div>
-      </Layout>
     )
     }
 }
