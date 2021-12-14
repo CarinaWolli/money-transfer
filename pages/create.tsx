@@ -92,7 +92,7 @@ export default function Create(props) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="flex flex-wrap -mx-3">
               <div className="flex items-center">
                 <label
                   className="block tracking-wide text-gray-700 font-bold text-lg">
@@ -112,12 +112,12 @@ export default function Create(props) {
                   </select>
                 </div>
               </div>
-              {!valid ? (
-                <p className="text-red-500 text-xs italic">Invalid value. Value must be higher than 0 and expected format is 0.00</p>
+            </div>
+            {!valid ? (
+                <p className="text-red-500 text-xs italic -mx-3 mb-6">Invalid value. Value must be higher than 0. Expected format is 0.00</p>
               ) : (
                 <div />
               )}
-            </div>
             <div className="-mx-3 pb-1 pt-3">
               <button onClick={submitData} className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">Send Money</button>
             </div>
