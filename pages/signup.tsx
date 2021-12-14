@@ -16,7 +16,13 @@ const SignUp = () => {
             const body = { name, email, password };
             const res = await axios.post('/api/signup', body);
             res.data
-            await Router.push('/');
+            signIn('credentials',
+                {
+                    email,
+                    password,
+                    callbackUrl: `/`,
+                }
+            )
         } catch (error) {
             console.error(error);
         }
