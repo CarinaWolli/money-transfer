@@ -30,15 +30,15 @@ export default function Index (props) {
     if (props.allTransactions) {
       console.log(session)
       return (
-        <div>
-          <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
+        <div className="mx-auto">
+          <div className=" mt-24">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
-              <div className="rounded-t mb-0 px-4 py-3 border-0">
+              <div className="rounded-t mb-0 py-3 border-0">
                 <div className="flex flex-wrap items-center">
-                  <div className="relative w-full px-4 max-w-full flex-grow flex-1 pl-0">
+                  <div className="relative w-full max-w-full flex-grow flex-1 px-8">
                     <h3 className="font-semibold text-base text-blueGray-700 text-2xl">Transactions</h3>
                   </div>
-                  <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">         
+                  <div className="relative w-full max-w-full flex-grow flex-1 text-right px-8">         
                     <Link href="/create" passHref>
                       <button className="bg-indigo-500 text-white active:bg-indigo-600 text-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
                     </Link>
@@ -46,7 +46,7 @@ export default function Index (props) {
                 </div>
               </div>
 
-              <div className="block w-full overflow-x-auto">
+              <div className="block w-full overflow-x-auto px-4 py-4">
                 <table className="items-start bg-transparent w-full border-collapse ">
                   <thead>
                     <tr>
