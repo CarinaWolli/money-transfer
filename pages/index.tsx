@@ -95,9 +95,54 @@ export default function Index(props) {
     )
   } else {
     return (
-      <div>
-        no Transactions
+      <div className="mx-auto">
+      <div className=" mt-24">
+        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
+          <div className="rounded-t mb-0 py-3 border-0">
+            <div className="flex flex-wrap items-center">
+              <div className="relative w-full max-w-full flex-grow flex-1 px-8">
+                <h3 className="font-semibold text-base text-blueGray-700 text-2xl">Transactions</h3>
+              </div>
+              <div className="relative w-full max-w-full flex-grow flex-1 text-right px-8">
+                <Link href="/create" passHref>
+                  <button className="bg-indigo-500 text-white active:bg-indigo-600 text-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="block w-full overflow-x-auto px-4 py-4">
+            <table className="items-start bg-transparent w-full border-collapse ">
+              <thead>
+                <tr>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    ID
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    From
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    To
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    Value
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    Currency
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    Created At
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-2">
+                    Updated At
+                  </th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
       </div>
+    </div>
     )
   }
 }
