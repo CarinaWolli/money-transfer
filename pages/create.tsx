@@ -94,7 +94,7 @@ export default function Create(props) {
                 <div className="flex w-72 items-center border-2 rounded-md ml-11">
                   <select onChange={handleToChange} type="number" className="w-64 px-2 py-3 text-normal text-gray-700">
                     <option key="default" value="0">None</option>
-                    {props.allUser.map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
+                    {props.allUser.filter(u => u.id != fromUserId).map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
                   </select>
                 </div>
               </div>
