@@ -112,12 +112,12 @@ export default function Create(props) {
                   Value:
                 </label>
                 <input
-                  className="appearance-none block w-72 text-gray-700 border-2 border-gray-200 rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  className="appearance-none block w-44 text-gray-700 border-2 border-gray-200 rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   placeholder="0.00"
                   value={value}
                   onChange={handleValueChange} />
-                <div className="flex items-center border-2 rounded-md ml-4">
+                <div className="flex items-center border-2 rounded-md ml-5">
                   <select onChange={handleCurrencyChange} className="px-4 py-3 text-normal text-gray-700" id="grid-state">
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
