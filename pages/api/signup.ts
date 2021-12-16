@@ -11,7 +11,7 @@ export default async function handle(req, res) {
     throw new Error("User already exists");
   }
 
-  const response = await prisma.user.create({
+  const responseUserCreate = await prisma.user.create({
     data: {
       name: name,
       email: email,
@@ -19,6 +19,19 @@ export default async function handle(req, res) {
     },
   });
 
-  res.status(200).send({ message: "User created", user: response });
+  console.log(responseUserCreate);
+  debugger;
+  //create initial transaction
+  const responseTransactionCreate = await prisma.transaction.create({
+    data: {
+      fromUserId: 1, //User 1 is Admin account from Money Transfer App
+      toUserId: responseUserCreate.id,
+      currency: "USD",
+      value: 1000.0,
+    },
+  });
+
+  res.status(200).send({ message: "User and transcatioion created" });
+
   return;
 }

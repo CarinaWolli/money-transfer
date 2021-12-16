@@ -78,8 +78,8 @@ export default function Index(props) {
                   {usersTransactions.map((transaction) =>
                     <tr key={transaction.id}>
                       <td key={transaction.id} className="pl-2">{transaction.id}</td>
-                      {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromUser.email}</td>}
-                      {session.id === transaction.toUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toUser.email}</td>}
+                      {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromUser.name}</td>}
+                      {session.id === transaction.toUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toUser.name}</td>}
                       {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-2 text-red-600">- {transaction.value}</td> : <td key={transaction.id} className="pl-2 text-green-600">+ {transaction.value}</td>}
                       <td key={transaction.id} className="pl-2">{transaction.currency}</td>
                       <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4, 21)}</td>
