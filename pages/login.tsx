@@ -8,7 +8,6 @@ import Link from "next/link"
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [isLoginStarted, setIsLoginStarted] = useState(false)
   const [loginError, setLoginError] = useState("")
   const router = useRouter()
 
@@ -20,7 +19,6 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    setIsLoginStarted(true)
     await signIn("credentials",
       {
         email,

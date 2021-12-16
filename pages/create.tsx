@@ -16,16 +16,16 @@ export default function Create(props) {
   const [valueStringFormat, setValueStringFormat] = useState("0.00")
   const [currency, setCurrency] = useState("EUR")
   const [valid, setValid] = useState(false)
-  const [userValid, setUserValid] = useState(false)
+  const [userNotNone, setUserNotNone] = useState(false)
 
   const { data: session, status } = useSession()
   const fromUserId = (session != undefined) ? session.id : 0
 
   let handleToChange = (e) => {
     if (e.target.value < 1) {
-      setUserValid(false)
+      setUserNotNone(false)
     } else {
-      setUserValid(true)
+      setUserNotNone(true)
     }
     settoUserId(parseInt(e.target.value))
   }
@@ -53,16 +53,16 @@ export default function Create(props) {
   }
 
   const submitData = async (e: React.SyntheticEvent) => {
-      const value = parseFloat(valueStringFormat)
-      e.preventDefault()
-      try {
-        const body = { fromUserId, toUserId, value, currency }
-        const res = await axios.post("/api/create", body)
-        res.data
-        await Router.push("/")
-      } catch (error) {
-        console.error(error)
-      }
+    const value = parseFloat(valueStringFormat)
+    e.preventDefault()
+    try {
+      const body = { fromUserId, toUserId, value, currency }
+      const res = await axios.post("/api/create", body)
+      res.data
+      await Router.push("/")
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   if (status === "loading") {
@@ -86,24 +86,24 @@ export default function Create(props) {
           </div>
           <form className="w-full max-w-lg">
             <div className="mb-6">
-            <div className="flex flex-wrap -mx-3">
-              <div className="flex items-center">
-                <label className="block tracking-wide text-gray-700 font-bold text-lg">
-                  To:
-                </label>
-                <div className="flex w-72 items-center border-2 rounded-md ml-11">
-                  <select onChange={handleToChange} type="number" className="w-64 px-2 py-3 text-normal text-gray-700">
-                    <option key="default" value="0">None</option>
-                    {props.allUser.filter(u => u.id != fromUserId).map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
-                  </select>
+              <div className="flex flex-wrap -mx-3">
+                <div className="flex items-center">
+                  <label className="block tracking-wide text-gray-700 font-bold text-lg">
+                    To:
+                  </label>
+                  <div className="flex w-72 items-center border-2 rounded-md ml-11">
+                    <select onChange={handleToChange} type="number" className="w-64 px-2 py-3 text-normal text-gray-700">
+                      <option key="default" value="0">None</option>
+                      {props.allUser.filter(u => u.id != fromUserId).map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
-            {!userValid ? (
-              <p className="text-red-500 text-xs italic -mx-3 mt-2">User can't be none.</p>
-            ) : (
-              <div />
-            )}
+              {!userNotNone ? (
+                <p className="text-red-500 text-xs italic -mx-3 mt-2">User can't be none.</p>
+              ) : (
+                <div />
+              )}
             </div>
             <div className="flex flex-wrap -mx-3">
               <div className="flex items-center">
@@ -132,7 +132,7 @@ export default function Create(props) {
               <div />
             )}
             <div className="-mx-3 pb-1 pt-3 mt-6">
-              <button onClick={submitData} disabled={!valid || !userValid}className={"bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded " + (valid && userValid ? "" : "bg-gray-400 text-white")} >Send Money</button>
+              <button onClick={submitData} disabled={!valid || !userNotNone} className={"bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded " + (valid && userNotNone ? "" : "bg-gray-400 text-white")} >Send Money</button>
             </div>
           </form>
         </div>

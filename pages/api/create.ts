@@ -1,7 +1,7 @@
-import prisma from "../../lib/prisma"
+import prisma from "../../lib/prisma";
 
 export default async function handle(req, res) {
-  const { fromUserId, toUserId, value, currency } = req.body
+  const { fromUserId, toUserId, value, currency } = req.body;
   const response = await prisma.transaction.create({
     data: {
       fromUserId,
@@ -9,7 +9,7 @@ export default async function handle(req, res) {
       currency,
       value,
     },
-  })
-  res.status(200).send({ message: "Transaction created", user: response })
-  return
+  });
+  res.status(200).send({ message: "Transaction created", user: response });
+  return;
 }

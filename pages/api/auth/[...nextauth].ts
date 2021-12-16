@@ -1,7 +1,7 @@
-import NextAuth from "next-auth"
-import CredentialProvider from "next-auth/providers/credentials"
-import prisma from "../../../lib/prisma"
-import { compare } from "bcrypt"
+import NextAuth from "next-auth";
+import CredentialProvider from "next-auth/providers/credentials";
+import prisma from "../../../lib/prisma";
+import { compare } from "bcrypt";
 
 export default NextAuth({
   session: {
@@ -24,19 +24,19 @@ export default NextAuth({
         // Add logic here to look up the user from the credentials supplied
         const user = await prisma.user.findUnique({
           where: { email: credentials?.email },
-        })
+        });
         if (!user) {
-          return null
+          return null;
         }
 
         const checkPassword = await compare(
           credentials?.password,
           user.password
-        )
+        );
         if (checkPassword) {
-          return user
+          return user;
         } else {
-          return null
+          return null;
         }
       },
     }),
@@ -44,15 +44,15 @@ export default NextAuth({
   callbacks: {
     jwt: ({ token, user }) => {
       if (user) {
-        token.id = user.id
+        token.id = user.id;
       }
-      return token
+      return token;
     },
     session: ({ session, token }) => {
       if (token) {
-        session.id = token.id
+        session.id = token.id;
       }
-      return session
+      return session;
     },
   },
   secret: "test",
@@ -64,4 +64,4 @@ export default NextAuth({
     signIn: "/login",
     error: "/login",
   },
-})
+});
