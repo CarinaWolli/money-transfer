@@ -80,10 +80,10 @@ export default function Index(props) {
                       <td key={transaction.id} className="pl-2">{transaction.id}</td>
                       {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.fromUser.email}</td>}
                       {session.id === transaction.toUserId ? <td key={transaction.id} className="pl-2">You</td> : <td key={transaction.id} className="pl-2">{transaction.toUser.email}</td>}
-                      <td key={transaction.id} className="pl-2">{transaction.value}</td>
+                      {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-2 text-red-600">- {transaction.value}</td> : <td key={transaction.id} className="pl-2 text-green-600">+ {transaction.value}</td>}
                       <td key={transaction.id} className="pl-2">{transaction.currency}</td>
-                      <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4, 25)}</td>
-                      <td key={transaction.id} className="pl-2">{transaction.updatedAt.toString().substring(4, 25)}</td>
+                      <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4, 21)}</td>
+                      <td key={transaction.id} className="pl-2">{transaction.updatedAt.toString().substring(4, 21)}</td>
                     </tr>
                   )}
                 </tbody>
@@ -105,7 +105,7 @@ export default function Index(props) {
               </div>
               <div className="relative w-full max-w-full flex-grow flex-1 text-right px-8">
                 <Link href="/create" passHref>
-                  <button className="bg-indigo-500 text-white active:bg-indigo-600 text-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
+                  <button className="bg-indigo-500 text-white active:bg-indigo-600 texçt-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
                 </Link>
               </div>
             </div>

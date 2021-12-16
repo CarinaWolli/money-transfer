@@ -13,7 +13,7 @@ export const getServerSideProps = async () => {
 
 export default function Create(props) {
   const [toUserId, settoUserId] = useState(0)
-  const [value, setValue] = useState("0.00")
+  const [valueStringFormat, setValueStringFormat] = useState("0.00")
   const [currency, setCurrency] = useState("EUR")
   const [valid, setValid] = useState(false)
   const [userValid, setUserValid] = useState(false)
@@ -40,23 +40,23 @@ export default function Create(props) {
       let splitString = StringVal.split(".")
       if (splitString.length - 1 == 1 && splitString[1].length == 2 && StringVal != "0.00") {
 
-        setValue(e.target.value)
+        setValueStringFormat(e.target.value)
         setValid(true)
       } else {
-        setValue(e.target.value)
+        setValueStringFormat(e.target.value)
         setValid(false)
       }
     } else {
-      setValue(e.target.value)
+      setValueStringFormat(e.target.value)
       setValid(false)
     }
   }
 
   const submitData = async (e: React.SyntheticEvent) => {
-      const val = parseFloat(value)
+      const value = parseFloat(valueStringFormat)
       e.preventDefault()
       try {
-        const body = { fromUserId, toUserId, val, currency }
+        const body = { fromUserId, toUserId, value, currency }
         const res = await axios.post("/api/create", body)
         res.data
         await Router.push("/")
@@ -115,7 +115,7 @@ export default function Create(props) {
                   className="appearance-none block w-44 text-gray-700 border-2 border-gray-200 rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   placeholder="0.00"
-                  value={value}
+                  value={valueStringFormat}
                   onChange={handleValueChange} />
                 <div className="flex items-center border-2 rounded-md ml-5">
                   <select onChange={handleCurrencyChange} className="px-4 py-3 text-normal text-gray-700" id="grid-state">
