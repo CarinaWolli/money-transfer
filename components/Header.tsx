@@ -47,7 +47,11 @@ export default function Header() {
                           <GrLogout
                             className="w-5 h-5 mr-2"
                           />
-                          <button onClick={() => { signOut() }}>Logout</button>
+                          <button onClick={() => {
+                            signOut({
+                              callbackUrl: "/login"
+                            })
+                          }}>Logout</button>
                         </button>
                       )}
                     </Menu.Item>

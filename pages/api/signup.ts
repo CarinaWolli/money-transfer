@@ -19,14 +19,15 @@ export default async function handle(req, res) {
     },
   });
 
-  console.log(responseUserCreate);
-  debugger;
+  const adminUser = await prisma.user.findFirst()
+
   //create initial transaction
   const responseTransactionCreate = await prisma.transaction.create({
     data: {
-      fromUserId: 1, //User 1 is Admin account from Money Transfer App
+      fromUserId: adminUser.id, 
       toUserId: responseUserCreate.id,
-      currency: "USD",
+      sourceCurrency: "USD",
+      targetCurrency: "USD",
       value: 1000.0,
     },
   });
