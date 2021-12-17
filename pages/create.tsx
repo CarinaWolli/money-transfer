@@ -43,7 +43,7 @@ export default function Create(props) {
   }
 
   let handleTargetCurrencyChange = (e) => {
-    setSourceCurrency(e.target.value)
+    setTargetCurrency(e.target.value)
   }
 
   let handleValueChange = (e) => {

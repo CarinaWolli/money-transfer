@@ -31,9 +31,9 @@ export default function Index(props) {
   const usersTransactions = props.allTransactions.filter(t => t.fromUserId === session.id || t.toUserId === session.id)
 
   if (props.allTransactions && usersTransactions.length > 0) {
-    return (  
+    return (
       <div className="mx-auto">
-        <Balance allTransactions={props.allTransactions} userId={session.id}/>
+        <Balance allTransactions={props.allTransactions} userId={session.id} />
         <div className=" mt-16">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 py-3 border-0">
@@ -71,7 +71,7 @@ export default function Index(props) {
                     <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-3">
                       Created At
                     </th>
-                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-3">
+                    <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left pl-6">
                       Updated At
                     </th>
                   </tr>
@@ -80,12 +80,24 @@ export default function Index(props) {
                   {usersTransactions.map((transaction) =>
                     <tr key={transaction.id}>
                       <td key={transaction.id} className="pl-2">{transaction.id}</td>
-                      {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-0">You</td> : <td key={transaction.id} className="pl-0">{transaction.fromUser.name}</td>}
-                      {session.id === transaction.toUserId ? <td key={transaction.id} className="pl-3">You</td> : <td key={transaction.id} className="pl-3">{transaction.toUser.name}</td>}
-                      {session.id === transaction.fromUserId ? <td key={transaction.id} className="pl-3 text-red-600">- {transaction.value.toFixed(2)}</td> : <td key={transaction.id} className="pl-3 text-green-600">+ {transaction.value.toFixed(2)}</td>}
-                      <td key={transaction.id} className="pl-5">{transaction.targetCurrency}</td>
+                      {session.id === transaction.fromUserId ?
+                        (<>
+                          <td key={transaction.id} className="pl-0">You</td>
+                          <td key={transaction.id} className="pl-3">{transaction.toUser.name}</td>
+                          <td key={transaction.id} className="pl-3 text-red-600">- {transaction.value.toFixed(2)}</td>
+                          <td key={transaction.id} className="pl-5">{transaction.sourceCurrency}</td>
+                        </>)
+                        :
+                        (<>
+                          <td key={transaction.id} className="pl-0">{transaction.fromUser.name}</td>
+                          <td key={transaction.id} className="pl-3">You</td>
+                          <td key={transaction.id} className="pl-3 text-green-600">+ {transaction.value.toFixed(2)}</td>
+                          <td key={transaction.id} className="pl-5">{transaction.targetCurrency}</td>
+                        </>)
+                      }
+
                       <td key={transaction.id} className="pl-2">{transaction.createdAt.toString().substring(4, 21)}</td>
-                      <td key={transaction.id} className="pl-2">{transaction.updatedAt.toString().substring(4, 21)}</td>
+                      <td key={transaction.id} className="pl-6">{transaction.updatedAt.toString().substring(4, 21)}</td>
                     </tr>
                   )}
                 </tbody>
