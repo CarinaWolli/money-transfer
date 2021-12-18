@@ -21,10 +21,57 @@ export const getServerSideProps = async () => {
       fromUser: true,
     }
   })
+
+  let url = new URL('https://api.exchangerate.host/lates')
+
+  url.search = new URLSearchParams({
+    base: 'USD',
+    symbols: ['EUR', 'NGN']
+  })
+
+  const exchangeRatesUSDBase = await fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response.json()
+    }).catch(error => console.error(error));
+
+  url.search = new URLSearchParams({
+    base: 'EUR',
+    symbols: ['USD', 'NGN']
+  })
+
+  const exchangeRatesEURBase = await fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response.json()
+    }).catch(error => console.error(error));
+
+  url.search = new URLSearchParams({
+    base: 'NGN',
+    symbols: ['USD', 'EUR']
+  })
+
+  const exchangeRatesNGNBase = await fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response.json()
+    }).catch(error => console.error(error));
+
+
   return {
     props: {
       allUserWithoutAdmin,
-      allTransactions
+      allTransactions,
+      exchangeRatesUSDBase,
+      exchangeRatesEURBase,
+      exchangeRatesNGNBase
+
     },
   }
 }
@@ -67,7 +114,7 @@ export default function Create(props) {
     setTargetCurrency(e.target.value)
   }
 
-  function isBalanceEnough(value, currency){
+  function isBalanceEnough(value, currency) {
     switch (String(currency)) {
       case "USD":
         if (value > usdBalance) {
@@ -96,12 +143,10 @@ export default function Create(props) {
   let handleValueChange = (e) => {
     const StringValue: String = e.target.value
 
-    if(StringValue.match(/^[0-9.]+./) != null)
-    {
+    if (StringValue.match(/^[0-9.]+./) != null) {
       setValueValid(true)
     }
-    else
-    {
+    else {
       setValueValid(false)
     }
 
