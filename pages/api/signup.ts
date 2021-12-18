@@ -28,7 +28,8 @@ export default async function handle(req, res) {
       toUserId: responseUserCreate.id,
       sourceCurrency: "USD",
       targetCurrency: "USD",
-      value: 1000.0,
+      sourceValue: 1000.0,
+      targetValue: 0
     },
   });
 

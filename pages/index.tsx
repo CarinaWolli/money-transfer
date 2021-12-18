@@ -84,14 +84,14 @@ export default function Index(props) {
                         (<>
                           <td key={transaction.id} className="pl-0">You</td>
                           <td key={transaction.id} className="pl-3">{transaction.toUser.name}</td>
-                          <td key={transaction.id} className="pl-3 text-red-600">- {transaction.value.toFixed(2)}</td>
+                          <td key={transaction.id} className="pl-3 text-red-600">- {transaction.sourceValue.toFixed(2)}</td>
                           <td key={transaction.id} className="pl-5">{transaction.sourceCurrency}</td>
                         </>)
                         :
                         (<>
                           <td key={transaction.id} className="pl-0">{transaction.fromUser.name}</td>
                           <td key={transaction.id} className="pl-3">You</td>
-                          <td key={transaction.id} className="pl-3 text-green-600">+ {transaction.value.toFixed(2)}</td>
+                          <td key={transaction.id} className="pl-3 text-green-600">+ {transaction.sourceValue.toFixed(2)}</td>
                           <td key={transaction.id} className="pl-5">{transaction.targetCurrency}</td>
                         </>)
                       }

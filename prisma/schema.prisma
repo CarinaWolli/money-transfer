@@ -28,7 +28,8 @@ model Transaction {
   fromUserId         Int      
   toUser             User      @relation("User_transactionsRecieved",fields: [toUserId], references: [id])
   toUserId           Int      
-  value              Float  
+  sourceValue        Float  
+  targetValue        Float
   sourceCurrency     Currency  
   targetCurrency     Currency  
   createdAt          DateTime  @default(now()) @map(name: "created_at")
