@@ -3,7 +3,8 @@ import prisma from "../lib/prisma"
 import { useSession } from "next-auth/react"
 import axios from "axios"
 import Router from "next/router"
-import { RiMoneyPoundCircleLine } from "react-icons/ri"
+import Balance from "../components/Balance"
+import { calcBalance } from "../helpers/HelperFunctions"
 
 export const getServerSideProps = async () => {
   const allUserWithoutAdmin = await prisma.user.findMany({
@@ -13,8 +14,18 @@ export const getServerSideProps = async () => {
       }
     }
   })
+
+  const allTransactions = await prisma.transaction.findMany({
+    include: {
+      toUser: true,
+      fromUser: true,
+    }
+  })
   return {
-    props: { allUserWithoutAdmin },
+    props: {
+      allUserWithoutAdmin,
+      allTransactions
+    },
   }
 }
 
@@ -23,11 +34,18 @@ export default function Create(props) {
   const [valueStringFormat, setValueStringFormat] = useState("0.00")
   const [sourceCurrency, setSourceCurrency] = useState("USD")
   const [targetCurrency, setTargetCurrency] = useState("USD")
-  const [valid, setValid] = useState(false)
+  const [valueValid, setValueValid] = useState(false)
   const [userNotNone, setUserNotNone] = useState(false)
+  const [enoughBalance, setEnoughBalance] = useState(true)
 
   const { data: session, status } = useSession()
   const fromUserId = (session != undefined) ? session.id : 0
+
+  const balanceUsdEurNgn = calcBalance(props.allTransactions, fromUserId)
+
+  const usdBalance = balanceUsdEurNgn.usdBalance
+  const eurBalance = balanceUsdEurNgn.eurBalance
+  const ngnBalance = balanceUsdEurNgn.ngnBalance
 
   let handleToChange = (e) => {
     if (e.target.value < 1) {
@@ -40,27 +58,57 @@ export default function Create(props) {
 
   let handleSourceCurrencyChange = (e) => {
     setSourceCurrency(e.target.value)
+    if (valueValid) {
+      isBalanceEnough(parseFloat(valueStringFormat), e.target.value)
+    }
   }
 
   let handleTargetCurrencyChange = (e) => {
     setTargetCurrency(e.target.value)
   }
 
-  let handleValueChange = (e) => {
-    const StringVal: String = e.target.value
-    if (StringVal.includes(".")) {
-      let splitString = StringVal.split(".")
-      if (splitString.length - 1 == 1 && splitString[1].length == 2 && StringVal != "0.00") {
+  function isBalanceEnough(value, currency){
+    switch (String(currency)) {
+      case "USD":
+        if (value > usdBalance) {
+          setEnoughBalance(false)
+        } else {
+          setEnoughBalance(true)
+        }
+        break;
+      case "EUR":
+        if (value > eurBalance) {
+          setEnoughBalance(false)
+        } else {
+          setEnoughBalance(true)
+        }
+        break;
+      case "NGN":
+        if (value > ngnBalance) {
+          setEnoughBalance(false)
+        } else {
+          setEnoughBalance(true)
+        }
+        break;
+    }
+  }
 
-        setValueStringFormat(e.target.value)
-        setValid(true)
-      } else {
-        setValueStringFormat(e.target.value)
-        setValid(false)
-      }
-    } else {
-      setValueStringFormat(e.target.value)
-      setValid(false)
+  let handleValueChange = (e) => {
+    const StringValue: String = e.target.value
+
+    if(StringValue.match(/^[0-9.]+./) != null)
+    {
+      setValueValid(true)
+    }
+    else
+    {
+      setValueValid(false)
+    }
+
+    setValueStringFormat(e.target.value)
+
+    if (valueValid) {
+      isBalanceEnough(e.target.value, sourceCurrency)
     }
   }
 
@@ -87,7 +135,8 @@ export default function Create(props) {
 
   return (
     <div className="mx-auto">
-      <div className="bg-gray-bg1 mt-24">
+      <Balance allTransactions={props.allTransactions} userId={fromUserId} />
+      <div className="bg-gray-bg1 mt-6">
         <div className="bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
           <div className="mb-10 px-4 py-3 ">
             <div className="flex flex-wrap items-center">
@@ -138,8 +187,13 @@ export default function Create(props) {
                 </div>
               </div>
             </div>
-            {!valid ? (
+            {!valueValid ? (
               <p className="text-red-500 text-xs italic -mx-3 mt-2">Invalid value. Value must be higher than 0. Expected format is 0.00</p>
+            ) : (
+              <div />
+            )}
+            {!enoughBalance ? (
+              <p className="text-red-500 text-xs italic -mx-3 mt-2">Your Balance in that currency is not high enough.</p>
             ) : (
               <div />
             )}
@@ -151,7 +205,7 @@ export default function Create(props) {
               </select>
             </div>
             <div className="-mx-3 pb-1 pt-3 mt-6">
-              <button onClick={submitData} disabled={!valid || !userNotNone} className={"bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded " + (valid && userNotNone ? "" : "bg-gray-400 text-white")} >Send Money</button>
+              <button onClick={submitData} disabled={!valueValid || !userNotNone} className={"bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded " + (valueValid && userNotNone ? "" : "bg-gray-400 text-white")} >Send Money</button>
             </div>
           </form>
         </div>

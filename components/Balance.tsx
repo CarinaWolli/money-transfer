@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import {calcBalance} from "../helpers/HelperFunctions"
 
 export default function Balance(props) {
   const [usdBalance, setUsdBalance] = useState(0.00)
@@ -6,33 +7,11 @@ export default function Balance(props) {
   const [ngnBalance, setNgnBalance] = useState(0.00)
 
   useEffect(() => {
-
-    const incomingUSD = props.allTransactions.filter(t => t.toUserId === props.userId && t.targetCurrency === "USD").reduce(
-      (total, transaction) => total + transaction.value, 0);
-
-    const outgoingUSD = props.allTransactions.filter(t => t.fromUserId === props.userId && t.sourceCurrency === "USD").reduce(
-      (total, transaction) => total + transaction.value, 0);
-
-    const incomingEUR = props.allTransactions.filter(t => t.toUserId === props.userId && t.targetCurrency === "EUR").reduce(
-      (total, transaction) => total + transaction.value, 0);
-
-    const outgoingEUR = props.allTransactions.filter(t => t.fromUserId === props.userId && t.sourceCurrency === "EUR").reduce(
-      (total, transaction) => total + transaction.value, 0);
-
-    const incomingNGN = props.allTransactions.filter(t => t.toUserId === props.userId && t.targetCurrency === "NGN").reduce(
-      (total, transaction) => total + transaction.value, 0);
-
-    const outgoingNGN = props.allTransactions.filter(t => t.fromUserId === props.userId && t.sourceCurrency === "NGN").reduce(
-      (total, transaction) => total + transaction.value, 0);
-
-    const usdBalanceCalaculated = incomingUSD -outgoingUSD
-    const eurBalanceCalaculated = incomingEUR -outgoingEUR
-    const ngnBalanceCalaculated = incomingNGN -outgoingNGN
-
-
-    setUsdBalance(usdBalanceCalaculated)
-    setEurBalance(eurBalanceCalaculated)
-    setNgnBalance(ngnBalanceCalaculated)
+    const balanceUsdEurNgn = calcBalance(props.allTransactions, props.userId)
+    
+    setUsdBalance(balanceUsdEurNgn.usdBalance)
+    setEurBalance(balanceUsdEurNgn.eurBalance)
+    setNgnBalance(balanceUsdEurNgn.ngnBalance)
   })
 
   return (
