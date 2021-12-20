@@ -6,6 +6,7 @@ import Router from "next/router"
 import Balance from "../components/Balance"
 import { calcBalance, calcTargetValue } from "../helpers/HelperFunctions"
 
+
 export const getServerSideProps = async () => {
   const allUserWithoutAdmin = await prisma.user.findMany({
     where: {
