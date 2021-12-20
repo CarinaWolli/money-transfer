@@ -42,7 +42,7 @@ export default function Index(props: any) {
                   <h3 className="font-semibold text-base text-blueGray-700 text-2xl">Transactions</h3>
                 </div>
                 <div className="relative w-full max-w-full flex-grow flex-1 text-right px-8">
-                  <Link href="/create" passHref>
+                  <Link href="/create" passHref={true}>
                     <button className="bg-indigo-500 text-white active:bg-indigo-600 text-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
                   </Link>
                 </div>
@@ -119,7 +119,7 @@ export default function Index(props: any) {
                   <h3 className="font-semibold text-base text-blueGray-700 text-2xl">Transactions</h3>
                 </div>
                 <div className="relative w-full max-w-full flex-grow flex-1 text-right px-8">
-                  <Link href="/create" passHref>
+                  <Link href="/create" passHref={true}>
                     <button className="bg-indigo-500 text-white active:bg-indigo-600 texçt-sm font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button"><a>New Transaction</a></button>
                   </Link>
                 </div>

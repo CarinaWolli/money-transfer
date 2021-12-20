@@ -14,11 +14,11 @@ export default function Header() {
       <nav className="bg-gray-300 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <div className="flex">
-            <Link href="/" passHref>
-              <>
+            <Link href="/" passHref={true}>
+              <button className="grid grid-cols-2 gap-0">
                 <img className="h-10 mr-3" src="https://static.thenounproject.com/png/13792-84.png" />
-                <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Money Transfer</span>
-              </>
+                <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white -ml-10">Money Transfer</span>
+              </button>
             </Link>
           </div>
           <div className="hidden md:block w-full md:w-auto">
