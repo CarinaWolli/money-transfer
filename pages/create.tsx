@@ -250,12 +250,20 @@ export default function Create(props: any) {
             ) : (
               <div />
             )}
-            <div className="flex flex-wrap -mx-3">
+             <div className="flex flex-wrap -mx-3 mt-5">
+            <div className="flex items-center">
+            <label
+                  className="block tracking-wide text-gray-700 font-bold text-lg">
+                  Convert to:
+                </label>
+              <div className="flex items-center border-2 rounded-md ml-5">
               <select onChange={handleTargetCurrencyChange} className="px-4 py-3 text-normal text-gray-700" id="grid-state">
                 <option value="USD">USD</option>
                 <option value="EUR">EUR</option>
                 <option value="NGN">NGN</option>
               </select>
+              </div>
+              </div>
             </div>
             <div className="-mx-3 pb-1 pt-3 mt-6">
               <button onClick={submitData} disabled={!valueValid || !userNotNone} className={"bg-indigo-500 text-white font-bold py-2 px-4 rounded " + (valueValid && userNotNone ? "" : "bg-gray-400 text-white")} >Send Money</button>
