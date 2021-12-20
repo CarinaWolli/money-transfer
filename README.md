@@ -1,6 +1,6 @@
 
 
-##Run Project
+## Run App
 First, run the development server:
 
 ```bash
