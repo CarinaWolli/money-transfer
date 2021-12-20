@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import {calcBalance} from "../helpers/HelperFunctions"
+import { calcBalance } from "../helpers/HelperFunctions"
 
 export default function Balance(props) {
   const [usdBalance, setUsdBalance] = useState(0.00)
@@ -8,7 +8,7 @@ export default function Balance(props) {
 
   useEffect(() => {
     const balanceUsdEurNgn = calcBalance(props.allTransactions, props.userId)
-    
+
     setUsdBalance(balanceUsdEurNgn.usdBalance)
     setEurBalance(balanceUsdEurNgn.eurBalance)
     setNgnBalance(balanceUsdEurNgn.ngnBalance)

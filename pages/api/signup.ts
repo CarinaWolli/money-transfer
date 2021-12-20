@@ -19,17 +19,17 @@ export default async function handle(req, res) {
     },
   });
 
-  const adminUser = await prisma.user.findFirst()
+  const adminUser = await prisma.user.findFirst();
 
   //create initial transaction
   const responseTransactionCreate = await prisma.transaction.create({
     data: {
-      fromUserId: adminUser.id, 
+      fromUserId: adminUser.id,
       toUserId: responseUserCreate.id,
       sourceCurrency: "USD",
       targetCurrency: "USD",
       sourceValue: 1000.0,
-      targetValue: 0
+      targetValue: 0,
     },
   });
 

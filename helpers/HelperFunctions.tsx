@@ -22,8 +22,8 @@ export function calcBalance(allTransactions, userId) {
   const ngnBalance = incomingNGN - outgoingNGN
 
   return ({
-    usdBalance, 
-    eurBalance, 
+    usdBalance,
+    eurBalance,
     ngnBalance
-    })
+  })
 }

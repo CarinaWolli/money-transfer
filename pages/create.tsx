@@ -164,12 +164,12 @@ export default function Create(props) {
     if (sourceCurrency === targetCurrency) {
       targetValue = sourceValue
     }
-    
+
     switch (String(sourceCurrency)) {
       case "USD":
         switch (String(targetCurrency)) {
           case "EUR":
-              targetValue = sourceValue * props.exchangeRatesUSDBase.rates.EUR
+            targetValue = sourceValue * props.exchangeRatesUSDBase.rates.EUR
             break;
           case "NGN":
             targetValue = sourceValue * props.exchangeRatesUSDBase.rates.NGN
