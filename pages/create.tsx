@@ -63,7 +63,7 @@ export const getServerSideProps = async () => {
       return response.json()
     }).catch(error => console.error(error));
 
-    const exchangeRates = {USD: exchangeRatesUSDBase, EUR: exchangeRatesEURBase, NGN: exchangeRatesNGNBase }
+  const exchangeRates = { USD: exchangeRatesUSDBase, EUR: exchangeRatesEURBase, NGN: exchangeRatesNGNBase }
 
   return {
     props: {
@@ -162,7 +162,7 @@ export default function Create(props) {
     if (sourceCurrency === targetCurrency) {
       targetValue = sourceValue
     } else {
-      
+
       targetValue = calcTargetValue(sourceValue, sourceCurrency, targetCurrency, props.exchangeRates)
     }
 
