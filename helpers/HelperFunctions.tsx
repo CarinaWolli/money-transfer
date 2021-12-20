@@ -27,3 +27,41 @@ export function calcBalance(allTransactions, userId) {
     ngnBalance
   })
 }
+
+export function calcTargetValue(sourceValue, sourceCurrency, targetCurrency, exchangeRates) {
+  let targetValue = 0.00
+
+  switch (String(sourceCurrency)) {
+    case "USD":
+      switch (String(targetCurrency)) {
+        case "EUR":
+          targetValue = sourceValue * exchangeRates.USD.rates.EUR
+          break;
+        case "NGN":
+          targetValue = sourceValue * exchangeRates.USD.rates.NGN
+          break;
+      }
+      break;
+    case "EUR":
+      switch (String(targetCurrency)) {
+        case "USD":
+          targetValue = sourceValue * exchangeRates.EUR.rates.USD
+          break;
+        case "NGN":
+          targetValue = sourceValue * exchangeRates.EUR.rates.NGN
+          break;
+      }
+      break;
+    case "NGN":
+      switch (String(targetCurrency)) {
+        case "USD":
+          targetValue = sourceValue * exchangeRates.NGN.rates.USD
+          break;
+        case "EUR":
+          targetValue = sourceValue * exchangeRates.NGN.rates.EUR
+          break;
+      }
+      break;
+  }
+  return targetValue
+}

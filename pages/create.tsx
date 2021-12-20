@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import axios from "axios"
 import Router from "next/router"
 import Balance from "../components/Balance"
-import { calcBalance } from "../helpers/HelperFunctions"
+import { calcBalance, calcTargetValue } from "../helpers/HelperFunctions"
 
 export const getServerSideProps = async () => {
   const allUserWithoutAdmin = await prisma.user.findMany({
@@ -22,7 +22,7 @@ export const getServerSideProps = async () => {
     }
   })
 
-  let url = new URL('https://api.exchangerate.host/lates')
+  let url = new URL('https://api.exchangerate.host/latest')
 
   url.search = new URLSearchParams({
     base: 'USD',
@@ -63,15 +63,13 @@ export const getServerSideProps = async () => {
       return response.json()
     }).catch(error => console.error(error));
 
+    const exchangeRates = {USD: exchangeRatesUSDBase, EUR: exchangeRatesEURBase, NGN: exchangeRatesNGNBase }
 
   return {
     props: {
       allUserWithoutAdmin,
       allTransactions,
-      exchangeRatesUSDBase,
-      exchangeRatesEURBase,
-      exchangeRatesNGNBase
-
+      exchangeRates
     },
   }
 }
@@ -163,39 +161,9 @@ export default function Create(props) {
 
     if (sourceCurrency === targetCurrency) {
       targetValue = sourceValue
-    }
-
-    switch (String(sourceCurrency)) {
-      case "USD":
-        switch (String(targetCurrency)) {
-          case "EUR":
-            targetValue = sourceValue * props.exchangeRatesUSDBase.rates.EUR
-            break;
-          case "NGN":
-            targetValue = sourceValue * props.exchangeRatesUSDBase.rates.NGN
-            break;
-        }
-        break;
-      case "EUR":
-        switch (String(targetCurrency)) {
-          case "USD":
-            targetValue = sourceValue * props.exchangeRatesEURBase.rates.USD
-            break;
-          case "NGN":
-            targetValue = sourceValue * props.exchangeRatesEURBase.rates.NGN
-            break;
-        }
-        break;
-      case "NGN":
-        switch (String(targetCurrency)) {
-          case "USD":
-            targetValue = sourceValue * props.exchangeRatesNGNBase.rates.USD
-            break;
-          case "EUR":
-            targetValue = sourceValue * props.exchangeRatesNGNBase.rates.EUR
-            break;
-        }
-        break;
+    } else {
+      
+      targetValue = calcTargetValue(sourceValue, sourceCurrency, targetCurrency, props.exchangeRates)
     }
 
     e.preventDefault()
