@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { calcBalance } from "../helpers/HelperFunctions"
 
+interface Props {
+  allTransactions: [];
+  userId: String;
+}
+
 export default function Balance(props) {
   const [usdBalance, setUsdBalance] = useState(0.00)
   const [eurBalance, setEurBalance] = useState(0.00)
