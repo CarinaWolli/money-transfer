@@ -1,13 +1,13 @@
 import prisma from "../../lib/prisma";
-import { getSession } from "next-auth/react"
+import { getSession } from "next-auth/react";
 
 export default async function handle(req: any, res: any) {
-  const session = await getSession({ req })
+  const session = await getSession({ req });
   if (!session) {
-    res.status(401)
+    res.status(401);
     return;
   }
-  
+
   const {
     fromUserId,
     toUserId,
@@ -16,6 +16,12 @@ export default async function handle(req: any, res: any) {
     targetValue,
     targetCurrency,
   } = req.body;
+
+  if (fromUserId != session.id || sourceValue < 0 || targetValue < 0) {
+    res.status(400);
+    return;
+  }
+
   const response = await prisma.transaction.create({
     data: {
       fromUserId,
