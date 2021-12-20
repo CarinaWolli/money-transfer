@@ -258,7 +258,7 @@ export default function Create(props: any) {
               </select>
             </div>
             <div className="-mx-3 pb-1 pt-3 mt-6">
-              <button onClick={submitData} disabled={!valueValid || !userNotNone} className={"bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded " + (valueValid && userNotNone ? "" : "bg-gray-400 text-white")} >Send Money</button>
+              <button onClick={submitData} disabled={!valueValid || !userNotNone} className={"bg-indigo-500 text-white font-bold py-2 px-4 rounded " + (valueValid && userNotNone ? "" : "bg-gray-400 text-white")} >Send Money</button>
             </div>
           </form>
         </div>
