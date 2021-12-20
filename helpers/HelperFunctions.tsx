@@ -27,3 +27,48 @@ export function calcBalance(allTransactions, userId) {
     ngnBalance
   })
 }
+
+export async function getExchangeRates(){
+  let url = new URL('https://api.exchangerate.host/lates')
+  
+  url.search = new URLSearchParams({
+    base: 'USD',
+    symbols: ['EUR', 'NGN']
+  })
+
+  const exchangeRatesUSDBase = await fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response.json()
+    }).catch(error => console.error(error));
+
+  url.search = new URLSearchParams({
+    base: 'EUR',
+    symbols: ['USD', 'NGN']
+  })
+
+  const exchangeRatesEURBase = await fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response.json()
+    }).catch(error => console.error(error));
+
+  url.search = new URLSearchParams({
+    base: 'NGN',
+    symbols: ['USD', 'EUR']
+  })
+
+  const exchangeRatesNGNBase = await fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+      return response.json()
+    })
+
+  return [exchangeRatesUSDBase, exchangeRatesEURBase, exchangeRatesNGNBase]
+}

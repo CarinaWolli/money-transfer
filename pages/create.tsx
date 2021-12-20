@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import axios from "axios"
 import Router from "next/router"
 import Balance from "../components/Balance"
-import { calcBalance } from "../helpers/HelperFunctions"
+import { calcBalance, getExchangeRates } from "../helpers/HelperFunctions"
 
 export const getServerSideProps = async () => {
   const allUserWithoutAdmin = await prisma.user.findMany({
@@ -22,47 +22,11 @@ export const getServerSideProps = async () => {
     }
   })
 
-  let url = new URL('https://api.exchangerate.host/lates')
 
-  url.search = new URLSearchParams({
-    base: 'USD',
-    symbols: ['EUR', 'NGN']
-  })
-
-  const exchangeRatesUSDBase = await fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText)
-      }
-      return response.json()
-    }).catch(error => console.error(error));
-
-  url.search = new URLSearchParams({
-    base: 'EUR',
-    symbols: ['USD', 'NGN']
-  })
-
-  const exchangeRatesEURBase = await fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText)
-      }
-      return response.json()
-    }).catch(error => console.error(error));
-
-  url.search = new URLSearchParams({
-    base: 'NGN',
-    symbols: ['USD', 'EUR']
-  })
-
-  const exchangeRatesNGNBase = await fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw Error(response.statusText)
-      }
-      return response.json()
-    }).catch(error => console.error(error));
-
+  const exchangeRates = await getExchangeRates()
+  const exchangeRatesUSDBase = exchangeRates[0]
+  const exchangeRatesEURBase = exchangeRates[1]
+  const exchangeRatesNGNBase = exchangeRates[2]
 
   return {
     props: {
