@@ -3,10 +3,10 @@ import { calcBalance } from "../helpers/HelperFunctions"
 
 interface Props {
   allTransactions: [];
-  userId: String;
+  userId: any;
 }
 
-export default function Balance(props) {
+export default function Balance(props: Props) {
   const [usdBalance, setUsdBalance] = useState(0.00)
   const [eurBalance, setEurBalance] = useState(0.00)
   const [ngnBalance, setNgnBalance] = useState(0.00)

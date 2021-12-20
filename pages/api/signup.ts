@@ -1,7 +1,7 @@
 import prisma from "../../lib/prisma";
 import { hashSync } from "bcrypt";
 
-export default async function handle(req, res) {
+export default async function handle(req: any, res: any) {
   const { name, email, password } = req.body;
   const findUser = await prisma.user.findFirst({
     where: { email: email },
@@ -19,12 +19,11 @@ export default async function handle(req, res) {
     },
   });
 
-  const adminUser = await prisma.user.findFirst();
+  let adminUser = await prisma.user.findFirst();
 
-  //create initial transaction
   const responseTransactionCreate = await prisma.transaction.create({
     data: {
-      fromUserId: adminUser.id,
+      fromUserId: adminUser!.id,
       toUserId: responseUserCreate.id,
       sourceCurrency: "USD",
       targetCurrency: "USD",

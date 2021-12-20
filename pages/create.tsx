@@ -28,9 +28,9 @@ export const getServerSideProps = async () => {
   url.search = new URLSearchParams({
     base: 'USD',
     symbols: ['EUR', 'NGN']
-  })
+  } as any).toString()
 
-  const exchangeRatesUSDBase = await fetch(url)
+  const exchangeRatesUSDBase = await fetch(url.toString())
     .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
@@ -41,9 +41,9 @@ export const getServerSideProps = async () => {
   url.search = new URLSearchParams({
     base: 'EUR',
     symbols: ['USD', 'NGN']
-  })
+  } as any).toString()
 
-  const exchangeRatesEURBase = await fetch(url)
+  const exchangeRatesEURBase = await fetch(url.toString())
     .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
@@ -54,9 +54,9 @@ export const getServerSideProps = async () => {
   url.search = new URLSearchParams({
     base: 'NGN',
     symbols: ['USD', 'EUR']
-  })
+  } as any).toString()
 
-  const exchangeRatesNGNBase = await fetch(url)
+  const exchangeRatesNGNBase = await fetch(url.toString())
     .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText)
@@ -75,7 +75,7 @@ export const getServerSideProps = async () => {
   }
 }
 
-export default function Create(props) {
+export default function Create(props: any) {
   const [toUserId, settoUserId] = useState(0)
   const [valueStringFormat, setValueStringFormat] = useState("0.00")
   const [sourceCurrency, setSourceCurrency] = useState("USD")
@@ -85,7 +85,7 @@ export default function Create(props) {
   const [enoughBalance, setEnoughBalance] = useState(true)
 
   const { data: session, status } = useSession()
-  const fromUserId = (session != undefined) ? session.id : 0
+  const fromUserId: any = (session != undefined) ? session.id : 0
 
   const balanceUsdEurNgn = calcBalance(props.allTransactions, fromUserId)
 
@@ -93,7 +93,7 @@ export default function Create(props) {
   const eurBalance = balanceUsdEurNgn.eurBalance
   const ngnBalance = balanceUsdEurNgn.ngnBalance
 
-  let handleToChange = (e) => {
+  let handleToChange = (e: any) => {
     if (e.target.value < 1) {
       setUserNotNone(false)
     } else {
@@ -102,18 +102,18 @@ export default function Create(props) {
     settoUserId(parseInt(e.target.value))
   }
 
-  let handleSourceCurrencyChange = (e) => {
+  let handleSourceCurrencyChange = (e: any) => {
     setSourceCurrency(e.target.value)
     if (valueValid) {
       isBalanceEnough(parseFloat(valueStringFormat), e.target.value)
     }
   }
 
-  let handleTargetCurrencyChange = (e) => {
+  let handleTargetCurrencyChange = (e: any) => {
     setTargetCurrency(e.target.value)
   }
 
-  function isBalanceEnough(value, currency) {
+  function isBalanceEnough(value: number, currency: String) {
     switch (String(currency)) {
       case "USD":
         if (value > usdBalance) {
@@ -139,7 +139,7 @@ export default function Create(props) {
     }
   }
 
-  let handleValueChange = (e) => {
+  let handleValueChange = (e: any) => {
     const StringValue: String = e.target.value
 
     if (StringValue.match(/^[0-9.]+./) != null) {
@@ -206,15 +206,15 @@ export default function Create(props) {
                     To:
                   </label>
                   <div className="flex w-72 items-center border-2 rounded-md ml-11">
-                    <select onChange={handleToChange} type="number" className="w-64 px-2 py-3 text-normal text-gray-700">
+                    <select onChange={handleToChange} className="w-64 px-2 py-3 text-normal text-gray-700">
                       <option key="default" value="0">None</option>
-                      {props.allUserWithoutAdmin.filter(u => u.id != fromUserId).map((user) => <option key={user.id} value={user.id}>{user.email}</option>)}
+                      {props.allUserWithoutAdmin.filter((u: any) => u['id'] != fromUserId).map((user: any) => <option key={user['id']} value={user.id}>{user.email}</option>)}
                     </select>
                   </div>
                 </div>
               </div>
               {!userNotNone ? (
-                <p className="text-red-500 text-xs italic -mx-3 mt-2">User can't be none.</p>
+                <p className="text-red-500 text-xs italic -mx-3 mt-2">User cannot be none.</p>
               ) : (
                 <div />
               )}

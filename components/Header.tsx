@@ -4,18 +4,23 @@ import { GrLogout } from "react-icons/gr"
 import { Menu, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import { useSession, signOut } from "next-auth/react"
+import Link from "next/link"
 
 export default function Header() {
   const { data: session, status } = useSession()
 
-  if (status === "authenticated") {
+  if (status === "authenticated" && session != null && session.user != undefined) {
     return (
       <nav className="bg-gray-300 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
-          <a href="/" className="flex">
-            <img className="h-10 mr-3" src="https://static.thenounproject.com/png/13792-84.png" />
-            <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Money Transfer</span>
-          </a>
+          <div className="flex">
+            <Link href="/" passHref>
+              <>
+                <img className="h-10 mr-3" src="https://static.thenounproject.com/png/13792-84.png" />
+                <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">Money Transfer</span>
+              </>
+            </Link>
+          </div>
           <div className="hidden md:block w-full md:w-auto">
             <Menu as="div" className="relative inline-block text-left">
               <div>

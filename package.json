@@ -21,6 +21,7 @@
     "super-json": "^2.2.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "16.11.11",
     "@types/react": "17.0.37",
     "autoprefixer": "^10.4.0",

@@ -5,7 +5,6 @@ import { compare } from "bcrypt";
 
 export default NextAuth({
   session: {
-    jwt: true,
     maxAge: 30 * 24 * 60 * 60,
   },
   providers: [
@@ -20,7 +19,7 @@ export default NextAuth({
         email: { label: "Email", type: "email", placeholder: "test@test.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials: any) {
         // Add logic here to look up the user from the credentials supplied
         const user = await prisma.user.findUnique({
           where: { email: credentials?.email },
@@ -30,7 +29,7 @@ export default NextAuth({
         }
 
         const checkPassword = await compare(
-          credentials?.password,
+          credentials.password,
           user.password
         );
         if (checkPassword) {
@@ -58,7 +57,6 @@ export default NextAuth({
   secret: "test",
   jwt: {
     secret: "test",
-    encryption: true,
   },
   pages: {
     signIn: "/login",
