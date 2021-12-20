@@ -1,10 +1,15 @@
-import { useSession } from "next-auth/react"
+import { useSession, getSession } from "next-auth/react"
 import prisma from "../lib/prisma"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import Balance from "../components/Balance"
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({req, res}:any) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.statusCode = 403;
+    return { props: { allTransactions: [] } };
+  }
   const allTransactions = await prisma.transaction.findMany({
     include: {
       toUser: true,

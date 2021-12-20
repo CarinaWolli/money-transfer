@@ -1,13 +1,19 @@
 import React, { useState } from "react"
 import prisma from "../lib/prisma"
-import { useSession } from "next-auth/react"
+import { useSession, getSession } from "next-auth/react"
 import axios from "axios"
 import Router from "next/router"
 import Balance from "../components/Balance"
 import { calcBalance, calcTargetValue } from "../helpers/HelperFunctions"
 
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({req, res}: any) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.statusCode = 401;
+    return { props: { allTransactions: [] } };
+  }
+  
   const allUserWithoutAdmin = await prisma.user.findMany({
     where: {
       NOT: {
