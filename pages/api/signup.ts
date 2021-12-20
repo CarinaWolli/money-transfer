@@ -29,7 +29,7 @@ export default async function handle(req, res) {
       sourceCurrency: "USD",
       targetCurrency: "USD",
       sourceValue: 1000.0,
-      targetValue: 0,
+      targetValue: 1000.0,
     },
   });
 

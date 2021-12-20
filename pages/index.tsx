@@ -110,6 +110,7 @@ export default function Index(props) {
   } else {
     return (
       <div className="mx-auto">
+        <Balance allTransactions={props.allTransactions} userId={session.id} />
         <div className=" mt-24">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 py-3 border-0">
