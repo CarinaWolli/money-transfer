@@ -22,15 +22,15 @@ export default function Balance(props) {
           <tbody>
             <tr>
               <td className="w-14" >USD:</td>
-              <td>+ {usdBalance}</td>
+              <td>+ {usdBalance.toFixed(2)}</td>
             </tr>
             <tr>
               <td>EUR:</td>
-              <td>+ {eurBalance}</td>
+              <td>+ {eurBalance.toFixed(2)}</td>
             </tr>
             <tr>
               <td>NGN:</td>
-              <td>+ {ngnBalance}</td>
+              <td>+ {ngnBalance.toFixed(2)}</td>
             </tr>
           </tbody>
         </table>

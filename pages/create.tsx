@@ -159,9 +159,48 @@ export default function Create(props) {
 
   const submitData = async (e: React.SyntheticEvent) => {
     const sourceValue = parseFloat(valueStringFormat)
+    let targetValue = 0.00
+
+    if (sourceCurrency === targetCurrency) {
+      targetValue = sourceValue
+    }
+    
+    switch (String(sourceCurrency)) {
+      case "USD":
+        switch (String(targetCurrency)) {
+          case "EUR":
+              targetValue = sourceValue * props.exchangeRatesUSDBase.rates.EUR
+            break;
+          case "NGN":
+            targetValue = sourceValue * props.exchangeRatesUSDBase.rates.NGN
+            break;
+        }
+        break;
+      case "EUR":
+        switch (String(targetCurrency)) {
+          case "USD":
+            targetValue = sourceValue * props.exchangeRatesEURBase.rates.USD
+            break;
+          case "NGN":
+            targetValue = sourceValue * props.exchangeRatesEURBase.rates.NGN
+            break;
+        }
+        break;
+      case "NGN":
+        switch (String(targetCurrency)) {
+          case "USD":
+            targetValue = sourceValue * props.exchangeRatesNGNBase.rates.USD
+            break;
+          case "EUR":
+            targetValue = sourceValue * props.exchangeRatesNGNBase.rates.EUR
+            break;
+        }
+        break;
+    }
+
     e.preventDefault()
     try {
-      const body = { fromUserId, toUserId, sourceValue, sourceCurrency, targetCurrency }
+      const body = { fromUserId, toUserId, sourceValue, targetValue, sourceCurrency, targetCurrency }
       const res = await axios.post("/api/create", body)
       res.data
       await Router.push("/")
