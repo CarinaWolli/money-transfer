@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import Balance from "../components/Balance"
 
-export const getServerSideProps = async ({req, res}:any) => {
+export const getServerSideProps = async ({ req, res }: any) => {
   const session = await getSession({ req });
   if (!session) {
     res.statusCode = 403;

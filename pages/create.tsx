@@ -7,13 +7,13 @@ import Balance from "../components/Balance"
 import { calcBalance, calcTargetValue } from "../helpers/HelperFunctions"
 
 
-export const getServerSideProps = async ({req, res}: any) => {
+export const getServerSideProps = async ({ req, res }: any) => {
   const session = await getSession({ req });
   if (!session) {
     res.statusCode = 401;
     return { props: { allTransactions: [] } };
   }
-  
+
   const allUserWithoutAdmin = await prisma.user.findMany({
     where: {
       NOT: {
