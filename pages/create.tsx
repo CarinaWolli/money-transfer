@@ -79,8 +79,13 @@ export const getServerSideProps = async (context: GetSessionParams) => {
     },
   }
 }
+interface Props {
+  allUserWithoutAdmin: any, 
+  allTransactions: any, 
+  exchangeRates: any
+}
 
-export default function Create(props: any) {
+export default function Create(props: Props) {
   const [toUserId, settoUserId] = useState(0)
   const [valueStringFormat, setValueStringFormat] = useState("0.00")
   const [sourceCurrency, setSourceCurrency] = useState("USD")

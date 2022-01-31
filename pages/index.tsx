@@ -20,8 +20,11 @@ export const getServerSideProps = async (context: GetSessionParams) => {
     props: { allTransactions },
   }
 }
+interface Props {
+  allTransactions: any;
+}
 
-export default function Index(props: any) {
+export default function Index(props: Props) {
   const router = useRouter()
   const { data: session, status } = useSession()
   let userId: number = 0
