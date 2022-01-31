@@ -1,7 +1,8 @@
 import prisma from "../../lib/prisma";
 import { hashSync } from "bcrypt";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handle(req: any, res: any) {
+export default async function handle(req: NextApiRequest, res: NextApiResponse) {
   const { name, email, password } = req.body;
   const findUser = await prisma.user.findFirst({
     where: { email: email },
@@ -25,7 +26,7 @@ export default async function handle(req: any, res: any) {
     },
   });
 
-  const responseTransactionCreate = await prisma.transaction.create({
+  await prisma.transaction.create({
     data: {
       fromUserId: adminUser!.id,
       toUserId: responseUserCreate.id,

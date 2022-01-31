@@ -1,4 +1,4 @@
-export function calcBalance(allTransactions: [], userId: any) {
+export function calcBalance(allTransactions: [], userId: number) {
   const incomingUSD = allTransactions.filter(t => t['toUserId'] === userId && t['targetCurrency'] === "USD").reduce(
     (total, transaction) => total + transaction['targetValue'], 0);
 
