@@ -82,9 +82,9 @@ export default function Index(props: any) {
                   </tr>
                 </thead>
                 <tbody>
-                  {usersTransactions.map((transaction: any) =>
+                  {usersTransactions.map((transaction: any, index: number) =>
                     <tr key={transaction.id + "tr"}>
-                      <td key={transaction.id + "0"} className="pl-2">{transaction.id}</td>
+                      <td key={transaction.id + "0"} className="pl-2">{index+1}</td>
                       {session.id === transaction.fromUserId ?
                         (<>
                           <td key={transaction.id + "1"} className="pl-0">You</td>
