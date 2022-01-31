@@ -27,5 +27,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Sign up new users
 Sign up two user, so you can test the functionalities of the app.
 
-
+## Deployment
 Link to deployed app: [Money Transfer App](https://money-transfer-wine.vercel.app) 
