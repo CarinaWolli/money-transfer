@@ -3,7 +3,7 @@ import { calcBalance } from "../helpers/HelperFunctions"
 
 interface Props {
   allTransactions: [];
-  userId: any;
+  userId: number;
 }
 
 export default function Balance(props: Props) {
@@ -12,11 +12,11 @@ export default function Balance(props: Props) {
   const [ngnBalance, setNgnBalance] = useState(0.00)
 
   useEffect(() => {
-    const balanceUsdEurNgn = calcBalance(props.allTransactions, props.userId)
-
-    setUsdBalance(balanceUsdEurNgn.usdBalance)
-    setEurBalance(balanceUsdEurNgn.eurBalance)
-    setNgnBalance(balanceUsdEurNgn.ngnBalance)
+      const userIdNumber: number = props.userId
+      const balanceUsdEurNgn = calcBalance(props.allTransactions, userIdNumber)
+      setUsdBalance(balanceUsdEurNgn.usdBalance)
+      setEurBalance(balanceUsdEurNgn.eurBalance)
+      setNgnBalance(balanceUsdEurNgn.ngnBalance)
   })
 
   return (

@@ -1,16 +1,15 @@
 import React, { useState } from "react"
 import prisma from "../lib/prisma"
-import { useSession, getSession } from "next-auth/react"
+import { useSession, getSession, GetSessionParams } from "next-auth/react"
 import axios from "axios"
 import Router from "next/router"
 import Balance from "../components/Balance"
 import { calcBalance, calcTargetValue } from "../helpers/HelperFunctions"
 
 
-export const getServerSideProps = async ({ req, res }: any) => {
-  const session = await getSession({ req });
-  if (!session) {
-    res.statusCode = 401;
+export const getServerSideProps = async (context: GetSessionParams) => {
+  const session = await getSession(context);
+  if (!session) { 
     return { props: { allTransactions: [] } };
   }
 
@@ -80,8 +79,13 @@ export const getServerSideProps = async ({ req, res }: any) => {
     },
   }
 }
+interface Props {
+  allUserWithoutAdmin: any, 
+  allTransactions: any, 
+  exchangeRates: any
+}
 
-export default function Create(props: any) {
+export default function Create(props: Props) {
   const [toUserId, settoUserId] = useState(0)
   const [valueStringFormat, setValueStringFormat] = useState("0.00")
   const [sourceCurrency, setSourceCurrency] = useState("USD")

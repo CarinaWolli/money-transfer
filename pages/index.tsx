@@ -1,13 +1,13 @@
-import { useSession, getSession } from "next-auth/react"
+import { useSession, getSession, GetSessionParams } from "next-auth/react"
 import prisma from "../lib/prisma"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import Balance from "../components/Balance"
+import { Session } from "next-auth"
 
-export const getServerSideProps = async ({ req, res }: any) => {
-  const session = await getSession({ req });
+export const getServerSideProps = async (context: GetSessionParams) => {
+  const session = await getSession(context);
   if (!session) {
-    res.statusCode = 403;
     return { props: { allTransactions: [] } };
   }
   const allTransactions = await prisma.transaction.findMany({
@@ -20,10 +20,14 @@ export const getServerSideProps = async ({ req, res }: any) => {
     props: { allTransactions },
   }
 }
+interface Props {
+  allTransactions: any;
+}
 
-export default function Index(props: any) {
+export default function Index(props: Props) {
   const router = useRouter()
   const { data: session, status } = useSession()
+  let userId: number = 0
 
   if (status === "loading") {
     return <div>Loading...</div>
@@ -31,14 +35,18 @@ export default function Index(props: any) {
   if (!session) {
     window.location.assign(window.location.href + "/api/auth/signin")
     return null
-  }
+  } 
 
+  if (typeof session.id === "number") {
+    userId = session.id
+  } 
+  
   const usersTransactions = props.allTransactions.filter((t: any) => t.fromUserId === session.id || t.toUserId === session.id)
 
   if (props.allTransactions && usersTransactions.length > 0) {
     return (
       <div className="mx-auto">
-        <Balance allTransactions={props.allTransactions} userId={session.id} />
+        <Balance allTransactions={props.allTransactions} userId={userId} />
         <div className=" mt-16">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 py-3 border-0">
@@ -115,7 +123,7 @@ export default function Index(props: any) {
   } else {
     return (
       <div className="mx-auto">
-        <Balance allTransactions={props.allTransactions} userId={session.id} />
+        <Balance allTransactions={props.allTransactions} userId={userId} />
         <div className=" mt-24">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div className="rounded-t mb-0 py-3 border-0">
