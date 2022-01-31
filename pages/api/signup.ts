@@ -19,7 +19,11 @@ export default async function handle(req: any, res: any) {
     },
   });
 
-  let adminUser = await prisma.user.findFirst();
+  let adminUser = await prisma.user.findFirst({
+    where: {
+      email: "money@transfer.com",
+    },
+  });
 
   const responseTransactionCreate = await prisma.transaction.create({
     data: {
